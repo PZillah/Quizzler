@@ -42,32 +42,31 @@ class ViewController: UIViewController {
         updateUI()
     }
 
-
     @IBAction func answerButtonPressed(_ sender: UIButton) {
         
         let userAnswer = sender.currentTitle //True, False
         let actualQuestion = quiz[questionNumber]
         let actualAnswer = actualQuestion.answer
         
-        
         if userAnswer == actualAnswer {
-            print("Right!")
+            sender.backgroundColor = UIColor.green
         } else {
-            print("Wrong")
+            sender.backgroundColor = UIColor.red
         }
         //or if questionNumber + 1 < quiz.count //count property returns the total number of elements in an array
-        if questionNumber < 2 { //this ensures the app doesn't crash if index goes out of range
+        if questionNumber < 14 { //this ensures the app doesn't crash if index goes out of range
             questionNumber += 1
         } else {
             questionNumber = 0
         }
         
-        updateUI()
+        Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(updateUI), userInfo: nil, repeats: false)
     }
     
-    func updateUI() {
-        questionLabel.text = quiz[questionNumber].text
+    @objc func updateUI() {
+        questionLabel.text = quiz[questionNumber].text //change the question
+        trueButton.backgroundColor = UIColor.clear //clear the button color
+        falseButton.backgroundColor = UIColor.clear
     }
-    
 }
 
